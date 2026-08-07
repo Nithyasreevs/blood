@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap');
+
+:root {
+  --primary-red: #ef4444;
+  --primary-hover: #dc2626;
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  font-family: var(--font-body);
+  color: #ffffff;
+  /* Make background image crystal clear */
+  background: url('./assets/background.png') no-repeat center center fixed !important;
+  background-size: cover !important;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+  /* Light overlay (40%) so background image shines through vividly! */
+  background: rgba(10, 15, 30, 0.42) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Translucent Glass Panels so Background Image is 100% visible behind cards! */
+.glass-panel, .card-panel {
+  background: rgba(15, 23, 42, 0.65) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45) !important;
+  transition: all 0.3s ease !important;
+}
+
+.glass-panel:hover, .card-panel:hover {
+  border-color: rgba(239, 68, 68, 0.5) !important;
+  box-shadow: 0 12px 40px rgba(239, 68, 68, 0.25) !important;
+  background: rgba(15, 23, 42, 0.72) !important;
+}
+
+.card-panel-highlight {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.25) 0%, rgba(15, 23, 42, 0.75) 100%) !important;
+  border: 1px solid rgba(239, 68, 68, 0.5) !important;
+  border-radius: 16px !important;
+  backdrop-filter: blur(16px) !important;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading) !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Buttons */
+.btn-primary {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  padding: 10px 20px !important;
+  border-radius: 10px !important;
+  border: none !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.5) !important;
+  transition: all 0.25s ease !important;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 24px rgba(239, 68, 68, 0.7) !important;
+  background: linear-gradient(135deg, #f43f5e 0%, #ef4444 100%) !important;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  padding: 10px 18px !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  backdrop-filter: blur(8px) !important;
+  transition: all 0.25s ease !important;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.22) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Badges */
+.badge-status {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.badge-critical {
+  background: rgba(239, 68, 68, 0.35) !important;
+  color: #fca5a5 !important;
+  border: 1px solid rgba(239, 68, 68, 0.6) !important;
+}
+
+.badge-high {
+  background: rgba(245, 158, 11, 0.35) !important;
+  color: #fde047 !important;
+  border: 1px solid rgba(245, 158, 11, 0.6) !important;
+}
+
+.badge-scheduled {
+  background: rgba(16, 185, 129, 0.35) !important;
+  color: #6ee7b7 !important;
+  border: 1px solid rgba(16, 185, 129, 0.6) !important;
+}
+
+.badge-ai {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.4) 0%, rgba(236, 72, 153, 0.4) 100%) !important;
+  color: #e9d5ff !important;
+  border: 1px solid rgba(168, 85, 247, 0.6) !important;
+}
+
+/* Form inputs */
+.form-control {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(15, 23, 42, 0.75) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 10px !important;
+  color: #ffffff !important;
+  font-size: 0.95rem !important;
+  outline: none !important;
+  backdrop-filter: blur(8px) !important;
+  transition: all 0.25s ease !important;
+}
+
+.form-control:focus {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.4) !important;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-bottom: 6px;
+}
+
+/* Pulse animation */
+@keyframes live-pulse {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.live-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #ef4444;
+  border-radius: 50%;
+  display: inline-block;
+  animation: live-pulse 1.8s infinite ease-in-out;
+}
