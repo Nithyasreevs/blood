@@ -42,6 +42,8 @@ import NotificationCentreView from './components/admin/NotificationCentreView';
 
 // AI Module Pages
 import AIEngineHub from './components/ai/AIEngineHub';
+import Chatbot from './components/common/Chatbot';
+import VoiceEmergencyAssistant from './components/common/VoiceEmergencyAssistant';
 
 function App() {
   const [currentRole, setCurrentRole] = useState('home'); // Default view: Clean Homepage!
@@ -180,6 +182,9 @@ function App() {
         onLogout={handleLogout}
         onOpenAuthWithRole={handleOpenAuthWithRole}
       />
+
+      <Chatbot user={user} isLoggedIn={isLoggedIn} />
+      <VoiceEmergencyAssistant />
 
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6">
         {renderModuleContent()}

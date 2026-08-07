@@ -3,6 +3,7 @@ const router = express.Router();
 const requestController = require('../controllers/requestController');
 
 router.post('/emergency', requestController.createEmergencyRequest);
+router.get('/hospitals', requestController.getRegisteredHospitals);
 router.get('/status', requestController.getRequestStatus);
 router.get('/status/:id', requestController.getRequestStatus);
 router.get('/tracking', requestController.getLiveDonorTracking);

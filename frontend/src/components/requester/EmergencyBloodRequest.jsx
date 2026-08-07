@@ -14,6 +14,7 @@ const EmergencyBloodRequest = ({ onRequestSubmitted }) => {
   const [bloodGroup, setBloodGroup] = useState('O-');
   const [units, setUnits] = useState('');
   const [hospitalName, setHospitalName] = useState('');
+  const [registeredHospitals, setRegisteredHospitals] = useState([]);
   const [phone, setPhone] = useState('');
   const [priority, setPriority] = useState('Critical');
   const [cityInput, setCityInput] = useState('');
@@ -76,6 +77,17 @@ const EmergencyBloodRequest = ({ onRequestSubmitted }) => {
     setHospitalName('');
     setLocation(prev => ({ ...prev, text: city }));
   };
+
+  useEffect(() => {
+    if (!selectedCity) {
+      setRegisteredHospitals([]);
+      return;
+    }
+    fetch(`/api/request/hospitals?city=${encodeURIComponent(selectedCity)}`)
+      .then(res => res.json())
+      .then(data => setRegisteredHospitals(data.success ? data.hospitals || [] : []))
+      .catch(() => setRegisteredHospitals([]));
+  }, [selectedCity]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -202,7 +214,10 @@ const EmergencyBloodRequest = ({ onRequestSubmitted }) => {
                 <label>Hospital Name</label>
                 <div className="relative">
                   <Building2 className="w-4 h-4 absolute left-3.5 top-3.5 text-slate-400" />
-                  <input type="text" required value={hospitalName} onChange={e => setHospitalName(e.target.value)} placeholder="Enter hospital name" className="form-control pl-10" />
+                  <input type="text" list="registered-hospitals" required value={hospitalName} onChange={e => setHospitalName(e.target.value)} placeholder={selectedCity ? 'Choose a registered hospital' : 'Select city first'} className="form-control pl-10" />
+                  <datalist id="registered-hospitals">
+                    {registeredHospitals.map(hospital => <option key={hospital._id || hospital.name} value={hospital.name}>{hospital.address}</option>)}
+                  </datalist>
                 </div>
               </div>
               <div className="form-group">

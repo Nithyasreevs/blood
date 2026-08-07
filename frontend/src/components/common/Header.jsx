@@ -1,5 +1,6 @@
 import React from 'react';
 import { HeartPulse, User, Building2, Shield, Bot, Bell, LogIn, LogOut, LayoutDashboard, FileText, MapPin, Award, CheckCircle, Plus, Users, BarChart3, AlertTriangle, Radio } from 'lucide-react';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const Header = ({ currentRole, setCurrentRole, activeTab, setActiveTab, isLoggedIn, user, onLogout, onOpenAuthWithRole }) => {
   // Sub-Pages Map for each module when inside a module
@@ -79,6 +80,8 @@ const Header = ({ currentRole, setCurrentRole, activeTab, setActiveTab, isLogged
               🏠 Home
             </button>
           )}
+
+          <LanguageSwitcher />
 
           {isLoggedIn ? (
             <div className="flex items-center gap-2 bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-xl text-xs">

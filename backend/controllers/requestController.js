@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Hospital = require('../models/Hospital');
 const EmergencyRequest = require('../models/EmergencyRequest');
 const Feedback = require('../models/Feedback');
 const { detectFakeRequest, calculateETA } = require('../utils/aiEngine');
@@ -11,6 +12,14 @@ exports.createEmergencyRequest = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Please provide Patient Name, Blood Group, and Contact Number.' });
     }
 
+    const hospital = await Hospital.findOne({
+      name: { $regex: `^${String(hospital_name || '').trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, $options: 'i' },
+      city: { $regex: `^${String(city || '').trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, $options: 'i' }
+    });
+    if (!hospital) {
+      return res.status(400).json({ success: false, message: 'Choose a registered hospital in the selected city so the hospital can verify the donor.' });
+    }
+
     const riskAnalysis = detectFakeRequest({
       patient_name, contact_number, units,
       hospital_name: hospital_name || 'Hospital Desk',
@@ -20,16 +29,17 @@ exports.createEmergencyRequest = async (req, res) => {
     const requestId = `req_${Date.now()}`;
     const newRequest = {
       request_id: requestId,
-      hospital_id: 'hosp_1',
-      hospital_name: hospital_name || 'Hospital Desk',
+      hospital_id: hospital.hospital_id,
+      hospital_name: hospital.name,
       patient_name,
       blood_group,
       units: Number(units) || 1,
       priority: priority || 'Critical',
       contact_number,
-      city: city || 'Chennai',
-      latitude: latitude || 13.0827,
-      longitude: longitude || 80.2707,
+      city: hospital.city,
+      // Match donors to the actual destination hospital, not the requester's phone GPS.
+      latitude: hospital.latitude,
+      longitude: hospital.longitude,
       status: riskAnalysis.needsVerification ? 'Needs Verification' : 'Waiting',
       created_time: new Date(),
       expiry_time: new Date(Date.now() + 6 * 60 * 60 * 1000),
@@ -50,6 +60,17 @@ exports.createEmergencyRequest = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+exports.getRegisteredHospitals = async (req, res) => {
+  try {
+    const city = String(req.query.city || '').trim();
+    const filter = city ? { city: { $regex: `^${city.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, $options: 'i' } } : {};
+    const hospitals = await Hospital.find(filter).select('name city address');
+    return res.json({ success: true, hospitals });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
   }
 };
 
